@@ -26,16 +26,123 @@ function crosswordMenu(){
     const button = document.createElement('button');
           button.setAttribute('target', 'crossword');
           button.setAttribute('id', 'crosswordButton');
-          button.setAttribute('onclick', 'convertWords()');
+          button.setAttribute('onclick', 'generateCrossword()');
           button.innerText = 'Generate crossword'
 
           content.append(button)
+
+    const crosswordContainer = document.createElement('div');
+          crosswordContainer.setAttribute('target', 'crossword');
+          crosswordContainer.setAttribute('id', 'crosswordContainer');    
+
+          container.append(crosswordContainer);
 }
 
-function convertWords(){
+const convertWords = ()=>{
+      const words = document.getElementById('crosswordInput');
+      let mistake = 0;
+      let arrWords = []
+      const reg = /^[a-z]/i;
+      words.value.split(',').forEach(item => {
+            var word = item.replace(',', '').trim();
+            if(reg.test(word)){
+                  arrWords.push(word);
+            } else {
+                  mistake++;
+            };
+      })
+      if(mistake > 0){
+            alert('Nieprawidłowe znaki!');
+      };
+      var splitedWords = [];
+      arrWords.forEach(word=> splitedWords.push(word.toUpperCase().split('')));
+      return splitedWords;
+}
+const getLongestIndex = (words)=> {
+      let length = 0;
+      let longestWord = 0;
+      let longestIndex = 0;
+      words.forEach((item, index)=>{
+            if(length < item.length){
+                  length = item.length;
+                  longestWord = item;
+                  longestIndex = index;
+            }
+      })
+      words.splice(longestIndex, 1)
+      return longestWord;
+}
+const generateCrossword = ()=>{
+      let wordsArr = convertWords();
+
+      let longestWord = getLongestIndex(wordsArr);
+
+      let secondLongestWord = getLongestIndex(wordsArr);
+
+      const crosswordContainer = document.getElementById('crosswordContainer');
+            crosswordContainer.innerText = '';
+
+            const crosswordPlayground = document.createElement('div');
+                  crosswordPlayground.setAttribute('target', 'crossword');
+                  crosswordPlayground.setAttribute('id', 'crosswordPlayground');    
+
+            crosswordContainer.append(crosswordPlayground);
+
+                  const row = document.createElement('div');
+                        row.setAttribute('target', 'crossword');
+                        row.classList.add('row');
+            
+                  crosswordPlayground.append(row);
+      
+            for (let b=0; b<longestWord.length; b++) {
+                  
+                  const letterBox = document.createElement('div');
+                        letterBox.setAttribute('target', 'crossword');
+                        letterBox.classList.add('letterBox');
+      
+                  row.append(letterBox);
+                  
+            }   
+            let ids = getIds(longestWord, secondLongestWord)
+            console.log(ids)
+
+            let centerIndex = closerToCenter(longestWord, secondLongestWord, ids)
+            console.log(centerIndex)
+            
+}
+
+const getIds = (firstWord, secondWord)=>{
+      let ids = [];
+      for(let i=0; i<secondWord.length; i++){
+            firstWord.forEach((item, index)=>{
+                  if(item === secondWord[i]){
+                        ids.push([item, index, i])
+                  }
+            })
+      }
+      return ids
       
 }
 
-
+const closerToCenter = (firstWord, secondWord, ids)=>{
+      let firstCenter = (firstWord.length-1)/2
+      let secondCenter = (secondWord.length-1)/2
+      console.log(firstCenter)
+      console.log(secondCenter)
+      let centerIndex = 0;
+      let firstNumber = 100;
+      let secondNumber = 100;
+      ids.forEach((item, index)=>{
+            let firstRest = Math.abs(firstCenter-item[1]);
+            let secondRest = Math.abs(secondCenter-item[2]);
+            if(firstRest<firstNumber && secondRest<secondNumber){
+                  firstNumber = firstRest;
+                  secondNumber = secondRest;
+                  centerIndex = index;
+            }
+            console.log(firstNumber, secondNumber)
+      })
+      return ids[centerIndex]
+}
 
 window.onload = crosswordMenu();
