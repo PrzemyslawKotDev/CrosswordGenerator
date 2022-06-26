@@ -88,27 +88,40 @@ const generateCrossword = ()=>{
 
             crosswordContainer.append(crosswordPlayground);
 
-                  const row = document.createElement('div');
-                        row.setAttribute('target', 'crossword');
-                        row.classList.add('row');
+            buildGrid();
             
-                  crosswordPlayground.append(row);
-      
-            for (let b=0; b<longestWord.length; b++) {
-                  
-                  const letterBox = document.createElement('div');
-                        letterBox.setAttribute('target', 'crossword');
-                        letterBox.classList.add('letterBox');
-      
-                  row.append(letterBox);
-                  
-            }   
             let ids = getIds(longestWord, secondLongestWord)
             console.log(ids)
 
             let centerIndex = closerToCenter(longestWord, secondLongestWord, ids)
             console.log(centerIndex)
             
+}
+
+const buildGrid = ()=>{
+
+      const playground = document.getElementById('crosswordPlayground');
+
+      for (let i=0; i<101; i++){
+            const row = document.createElement('div');
+                  row.setAttribute('target', 'crossword');
+                  row.setAttribute('id', `row${i}`);    
+                  row.classList.add('row');
+
+                  playground.append(row);
+
+            for (let j=0; j<101; j++) {
+          
+                  const letterBox = document.createElement('div');
+                        letterBox.setAttribute('target', 'crossword');
+                        letterBox.setAttribute('id', `row${i}box${j}`);    
+                        //letterBox.classList.add('letterBox');
+      
+                  row.append(letterBox);
+                  
+            }   
+      }
+
 }
 
 const getIds = (firstWord, secondWord)=>{

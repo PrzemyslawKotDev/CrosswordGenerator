@@ -37,15 +37,16 @@
     flex-wrap: wrap;
 }
 .row[target=crossword]{
-    display: block;
     width: 100%;
 }
 .letterBox[target=crossword]{
-    display: inline-block;
+    align-items: center;
     box-shadow: 0 0 0 4px blueviolet;
     outline: dashed 4px darkturquoise;
     margin: 2px;
     background-color: blueviolet;
     height: 40px;
     width: 40px;
+    font-size: 30px;
+    font-weight: bold;
 }
