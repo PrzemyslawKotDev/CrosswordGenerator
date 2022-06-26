@@ -1,0 +1,32 @@
+*[target=crossword]{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+#crosswordContent[target=crossword]{
+    width: 100%;
+    height: 100vh;
+    background-color: antiquewhite;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+#crosswordTitle[target=crossword]{
+    width: 75%;
+    margin: 1em;
+    font-size: 1.5em;
+}
+#crosswordInput[target=crossword]{
+    width: 75%;
+    padding: 0.25em 0.5em;
+    font-size: 1.1em;
+    border-radius: 8px;
+    border: none;
+}
+#crosswordButton[target=crossword]{
+    padding: 0.35em 0.75em;
+    font-size: 1.25em;
+    margin: 1.25em;
+    border-radius: 8px;
+    border: none;
+    background-color: limegreen;
+}
